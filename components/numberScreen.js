@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Alert, Dimensions} from 'react-native';
 import Card from '../components/card'
 import Colors from '../constants/colors'
 import colors from '../constants/colors';
+import { setRecoveryProps } from 'expo/build/ErrorRecovery/ErrorRecovery';
 
 
-function NumberScreen() {
+function NumberScreen(props) {
+  console.log(props)
   const [enteredValue, setEnteredValue] = useState('');
   const [confirmed, setConfirmed] = useState(false)
   const [selectedNumber, setSelectedNumber] = useState()
@@ -30,7 +32,7 @@ function NumberScreen() {
   }
   let confirmedOutput;
   if(confirmed === true){
-     confirmedOutput = <View style={styles.gameStart}><Text>Confirmed number is {selectedNumber}</Text><View marginTop={20}><Button title="Start Game" color={colors.primary}/></View></View>
+     confirmedOutput = <View style={styles.gameStart}><Text>Confirmed number is {selectedNumber}</Text><View marginTop={20}><Button title="Start Game" color={colors.primary} onPress={() => props.userNumberSelected(selectedNumber)}/></View></View>
   }
  
 
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   buttons:{
-    width: 100
+    width: Dimensions.get("window").width * 0.2
   },
   input:{
     height: 30,
